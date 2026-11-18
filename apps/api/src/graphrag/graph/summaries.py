@@ -99,6 +99,24 @@ class Reporter(Protocol):
     async def report(self, data: ReportInput) -> Report: ...
 
 
+_TYPE_SINGULARS = {
+    "PERSON": "person",
+    "ORGANIZATION": "organization",
+    "LOCATION": "location",
+    "PRODUCT": "product",
+    "TECHNOLOGY": "technology",
+    "EVENT": "event",
+    "CONCEPT": "concept",
+    "OTHER": "other entity",
+}
+
+
+def _count_phrase(kind: str, count: int) -> str:
+    if count == 1:
+        return f"1 {_TYPE_SINGULARS.get(kind, kind.lower())}"
+    return f"{count} {_TYPE_PLURALS.get(kind, kind.lower())}"
+
+
 def _join_names(names: Sequence[str]) -> str:
     if len(names) <= 1:
         return "".join(names)
@@ -119,7 +137,7 @@ def _top_relations(data: ReportInput, count: int) -> list[RelationBrief]:
 def _sentence(text: str, limit: int = 220) -> str:
     text = " ".join(text.split())
     first = re.split(r"(?<=[.!?])\s", text, maxsplit=1)[0]
-    return first[:limit].rstrip(" ,;:")
+    return first[:limit].rstrip(" ,;:.!?")
 
 
 class LocalReporter:
@@ -133,21 +151,22 @@ def template_report(data: ReportInput) -> Report:
     leaders = _top_entities(data, 3)
     title = _join_names([e.name for e in leaders])[:MAX_TITLE] or "Community"
     kinds = Counter(e.type for e in data.entities)
-    breakdown = ", ".join(f"{n} {_TYPE_PLURALS.get(t, t.lower())}" for t, n in kinds.most_common(4))
-    parts = [
-        f"This community links {len(data.entities)} entities ({breakdown}) through "
-        f"{len(data.relations)} relationships."
-    ]
+    breakdown = ", ".join(_count_phrase(t, n) for t, n in kinds.most_common(4))
+    parts: list[str] = []
     if leaders and leaders[0].description:
-        parts.append(
-            f"{leaders[0].name} is the most connected: {_sentence(leaders[0].description)}."
-        )
+        parts.append(f"{_sentence(leaders[0].description)}.")
+    elif leaders:
+        parts.append(f"Centered on {leaders[0].name}.")
     facts = _top_relations(data, 3)
     if facts:
         rendered = "; ".join(
             f"{r.source} {predicate_phrase(r.predicate)} {r.target}" for r in facts
         )
         parts.append(f"Key relationships: {rendered}.")
+    parts.append(
+        f"It spans {len(data.entities)} entities ({breakdown}) and "
+        f"{len(data.relations)} relationships."
+    )
     if data.children:
         parts.append(
             "It breaks down into " + _join_names([c.title for c in data.children[:4]]) + "."
