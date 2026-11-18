@@ -1,4 +1,4 @@
-"""The demo corpus: fourteen research notes on autonomous port logistics.
+"""The demo corpus: eighteen research notes on autonomous port logistics.
 
 Every company, person and product is fictional; the cities are real. The notes overlap on
 purpose (the same companies appear in several of them, sometimes under a short name), so the
@@ -236,6 +236,66 @@ Henrik Lindgren advises Northgate Sensors and collaborates with Helios Robotics.
 
 The group found that fusing lidar and radar halves false stops in fog. Helios Robotics adopted the method in the Orion Engine, and Meridian Port Systems asked Northgate Sensors for the same firmware. Computer vision adds a third channel that improves detection of cargo handlers on the quay.""",
     ),
+    Note(
+        "lumen-energy-profile",
+        "Lumen Energy: company profile",
+        """# Lumen Energy
+
+Lumen Energy is a grid storage and renewable energy company based in Hamburg. Ingrid Vogel founded Lumen Energy in 2017 and serves as CEO. Nordic Grid Fund invested in Lumen Energy in 2021.
+
+## Customers and partners
+
+Lumen Energy supplies renewable energy to the Port of Rotterdam Authority and to Aurora Cold Chain. Lumen Energy partnered with Voltaic Cells to recycle used battery packs, and with Baltic Freight Group to power its Hamburg yard. Ingrid Vogel presented the battery recycling programme at the Asia Port Automation Forum.
+
+## Outlook
+
+Ingrid Vogel said grid storage will decide how fast ports can electrify. Lumen Energy competes with Harbor Grid Services for terminal energy contracts.""",
+    ),
+    Note(
+        "baltic-freight-profile",
+        "Baltic Freight Group: company profile",
+        """# Baltic Freight Group
+
+Baltic Freight Group is a shipping company based in Hamburg. Jonas Weber is the CEO of Baltic Freight Group. The company runs container services between Hamburg, Gothenburg and Tallinn.
+
+## Technology
+
+Baltic Freight Group uses the Harbor Twin to plan berth schedules. Baltic Freight Group partnered with Kestrel Analytics in 2023 and acquired Delta Freight Cooperative in 2024. Jonas Weber attended the Global Logistics Summit and the Baltic Logistics Forum.
+
+## Events
+
+Baltic Freight Group hosted the Baltic Logistics Forum in Tallinn. Priya Nair presented the Harbor Twin at the Baltic Logistics Forum, and Laura Becker spoke about the Rotterdam automation roadmap.""",
+    ),
+    Note(
+        "pacific-harbor-profile",
+        "Pacific Harbor Alliance: profile",
+        """# Pacific Harbor Alliance
+
+Pacific Harbor Alliance is a consortium of Asian terminal operators headquartered in Singapore. Dr. Wei Zhang chairs Pacific Harbor Alliance.
+
+## Members and projects
+
+Aurora Cold Chain joined Pacific Harbor Alliance as an associate member. Pacific Harbor Alliance partnered with Meridian Port Systems to deploy the Meridian Hauler in Singapore and Shanghai. Pacific Harbor Alliance also works with Fjord Intelligence Lab on autonomous navigation.
+
+## Standards
+
+Wei Zhang attended the Asia Port Automation Forum and argued that standards for autonomous yard vehicles should follow the EuroPort Safety Commission. Pacific Harbor Alliance competes with the Singapore Maritime Council for influence over regional standards.""",
+    ),
+    Note(
+        "fjord-intelligence-lab",
+        "Fjord Intelligence Lab",
+        """# Fjord Intelligence Lab
+
+Fjord Intelligence Lab is an AI research lab based in Oslo. Sigrid Haugen founded Fjord Intelligence Lab in 2020 as a spin-out of Gothenburg Institute of Technology. Prof. Henrik Lindgren advises Fjord Intelligence Lab.
+
+## Research
+
+Fjord Intelligence Lab develops the Fjord Navigator, a path planning model built on reinforcement learning and sensor fusion. Meridian Port Systems licensed the Fjord Navigator for the Meridian Hauler. Tidewater Capital invested in Fjord Intelligence Lab in 2024.
+
+## Collaboration
+
+Sigrid Haugen presented the Fjord Navigator at the Asia Port Automation Forum. Fjord Intelligence Lab partnered with Pacific Harbor Alliance on autonomous navigation, and with Northgate Sensors on lidar calibration.""",
+    ),
 )
 
 # Questions replayed by the seeder so the playground history and the traffic charts have a
@@ -251,6 +311,8 @@ QUESTIONS: tuple[tuple[str, str], ...] = (
     ("local", "Who attended the Global Logistics Summit?"),
     ("local", "Which company built the Harbor Twin?"),
     ("local", "What is the Meridian Hauler?"),
+    ("local", "Who founded Lumen Energy?"),
+    ("local", "Who chairs Pacific Harbor Alliance?"),
     ("global", "What are the main themes across these documents?"),
     ("global", "How is predictive maintenance used in port terminals?"),
     ("global", "Which organizations shape autonomous port logistics?"),
@@ -261,4 +323,6 @@ QUESTIONS: tuple[tuple[str, str], ...] = (
     ("hybrid", "What is the relationship between Helios Robotics and Meridian Port Systems?"),
     ("hybrid", "Who regulates autonomous carriers and what did they decide?"),
     ("hybrid", "How did Aurora Cold Chain adopt the Atlas Platform?"),
+    ("hybrid", "What does Fjord Intelligence Lab contribute to port navigation?"),
+    ("global", "Which research groups and investors support these companies?"),
 )

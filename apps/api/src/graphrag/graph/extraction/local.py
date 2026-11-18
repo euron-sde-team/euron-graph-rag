@@ -73,6 +73,9 @@ class Pattern:
     reverse: bool = False
     first: frozenset[str] | None = ANY
     second: frozenset[str] | None = ANY
+    # Whether a constraint naming one type teaches an untyped entity that type. Off for verbs
+    # that take many kinds of object ("presented the Fjord Navigator").
+    infer: bool = True
 
 
 def _p(
@@ -82,8 +85,9 @@ def _p(
     reverse: bool = False,
     first: frozenset[str] | None = ANY,
     second: frozenset[str] | None = ANY,
+    infer: bool = True,
 ) -> Pattern:
-    return Pattern(re.compile(regex), predicate, reverse, first, second)
+    return Pattern(re.compile(regex), predicate, reverse, first, second, infer)
 
 
 # Order matters: passive forms and role phrases come before the bare verbs they contain.
@@ -249,6 +253,7 @@ PATTERNS: tuple[Pattern, ...] = (
         "ATTENDED",
         first=AGENT,
         second=_t(EVENT),
+        infer=False,
     ),
     _p(
         r"\bdevelop(?:ed|s|ing)\b|\bbuilt\b|\bbuilds\b|\bcreated\b|\bdesigned\b|\blaunched\b|\breleased\b|\bunveiled\b|\bintroduced\b|\bmanufactur\w+\b|\bmakes\b|\bproduces\b",
@@ -590,9 +595,9 @@ def _match(
         # type teaches the entity that type (see `inferred` in extract_chunks).
         if not _fits(ta, pattern.first) or not _fits(tb, pattern.second):
             continue
-        if ta == OTHER and pattern.first and len(pattern.first) == 1:
+        if pattern.infer and ta == OTHER and pattern.first and len(pattern.first) == 1:
             inferred[a.key] = next(iter(pattern.first))
-        if tb == OTHER and pattern.second and len(pattern.second) == 1:
+        if pattern.infer and tb == OTHER and pattern.second and len(pattern.second) == 1:
             inferred[b.key] = next(iter(pattern.second))
         source, target = (b, a) if pattern.reverse else (a, b)
         quote = sentence[: DESCRIPTION_LIMIT * 2]

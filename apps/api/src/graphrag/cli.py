@@ -111,7 +111,7 @@ def seed(
     ] = None,
     traffic: Annotated[bool, typer.Option(help="Replay two weeks of demo questions.")] = True,
 ) -> None:
-    """Demo accounts, a project with fourteen notes, its knowledge graph and a question history."""
+    """Demo accounts, a project with eighteen notes, its knowledge graph and a question history."""
     from graphrag.demo.seed import run
 
     settings = get_settings()

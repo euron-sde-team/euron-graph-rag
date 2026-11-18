@@ -5,6 +5,7 @@ from __future__ import annotations
 import httpx
 import pytest
 
+from graphrag.demo.corpus import NOTES
 from tests.integration.conftest import Graph
 from tests.integration.support import get_json
 
@@ -15,7 +16,7 @@ async def test_every_note_reaches_ready_with_chunks_and_graph_counts(
     client: httpx.AsyncClient, graph: Graph
 ) -> None:
     page = await get_json(client, graph.owner, f"{graph.base}/documents", limit=100)
-    assert page["total"] == 14
+    assert page["total"] == len(NOTES)
     for document in page["items"]:
         assert document["status"] == "ready", document
         assert document["stage"] == "done"
@@ -90,7 +91,7 @@ async def test_the_build_is_recorded_and_the_dashboard_reflects_the_graph(
     assert stats["communities"] >= 3
     assert stats["modularity"] > 0.2
     overview = await get_json(client, graph.owner, f"{graph.base}/overview")
-    assert overview["counts"]["documents"] == 14
+    assert overview["counts"]["documents"] == len(NOTES)
     assert overview["counts"]["entities"] == stats["entities"]
     assert overview["pipeline"]["failed"] == 0
     assert overview["latest_build"]["status"] == "completed"

@@ -176,7 +176,7 @@ class Graph:
 
 @pytest.fixture(scope="session")
 async def graph(client: httpx.AsyncClient) -> Graph:
-    """The fourteen demo notes through the real pipeline, once for the whole session."""
+    """The demo notes through the real pipeline, once for the whole session."""
     owner = await signup(client, "Graph Owner")
     await import_notes(client, owner, owner.project)
     await settle(client)

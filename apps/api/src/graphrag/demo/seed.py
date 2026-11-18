@@ -1,7 +1,7 @@
 """`make demo`: a lived-in project, built through the same services as any real use.
 
 Meridian Research (fictional) keeps an analyst notebook on autonomous port logistics. The seed
-creates three accounts, a project, uploads fourteen research notes, waits for the pipeline
+creates three accounts, a project, uploads the research notes, waits for the pipeline
 (parse, embed, extract, resolve duplicates, detect communities, write reports) to finish
 and then replays two weeks of questions through the real search service. Every chunk,
 entity, relation, community report and answer is produced by the real pipeline; the only

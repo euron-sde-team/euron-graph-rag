@@ -115,13 +115,13 @@ ORG_VERBS = _words(
     """announced acquired launched raised partnered signed opened expanded supplies supplied
     manufactures manufactured operates operated employs employed reported released invested
     merged unveiled acquires announces launches partners builds built develops developed
-    deployed deploys hired plans planned runs ran sells sold ships shipped delivers delivered
+    deployed deploys hired joined joins plans planned runs ran sells sold ships shipped delivers delivered
     competes competed funded funds opened closed"""
 )
 PERSON_VERBS = _words(
-    """said says joined joins leads led founded argued argues noted notes explained explains
+    """said says leads led founded argued argues noted notes explained explains
     told resigned studied wrote writes presented presents believes believed stated added
-    recalled warned predicted appointed hired mentored"""
+    recalled warned predicted appointed mentored"""
 )
 
 # Acronyms (folded) and the type they usually denote.
