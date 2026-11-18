@@ -17,7 +17,7 @@ on this repository ("Security" tab, "Report a vulnerability").
 
 Please include:
 
-- the affected component (`apps/api`, `apps/web`, `sdk/python`, `infra/terraform/...`) and
+- the affected component (`apps/api`, `apps/web`, `infra/terraform/...`) and
   the version or commit,
 - a description of the issue and its impact,
 - steps to reproduce, or a proof of concept,
@@ -37,8 +37,8 @@ What to expect:
 In scope: the code in this repository and the infrastructure it provisions with its default
 settings. The most important classes of issue for this project are:
 
-- **Crossing a project boundary**: reading, querying, evaluating or citing another project's
-  collections, documents, chunks or evaluation results, with a session or an API key.
+- **Crossing a project boundary**: reading, querying or citing another project's
+  documents, passages, entities, relations or communities, with a session or an API key.
 - **Server-side request forgery through the URL loader**: making a GraphRAG server fetch an
   address it refuses by policy (private ranges, loopback, link-local, cloud metadata).
 - **API key or session forgery**, and privilege escalation from the `viewer` to the `editor`
@@ -46,8 +46,8 @@ settings. The most important classes of issue for this project are:
 
 Out of scope:
 
-- **Content a project member can already read.** Members see every collection in their
-  project by design, and retrieval results and answers quote those documents.
+- **Content a project member can already read.** Members see every document in their
+  project by design, and answers quote those documents.
 - **Instructions planted inside your own documents.** A model-backed answerer or judge may
   follow text written into a document you ingested yourself. GraphRAG fences sources as data
   and tells the model to ignore instructions inside them, but no prompt is a security

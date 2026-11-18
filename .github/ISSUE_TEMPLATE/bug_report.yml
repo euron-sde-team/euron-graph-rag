@@ -17,7 +17,7 @@ body:
     id: repro
     attributes:
       label: Steps to reproduce
-      description: If retrieval or an evaluation is involved, include the pipeline version's configuration (GET .../pipelines/{n}) and the query or dataset item, with private content removed. A run id and the request id from the error help too.
+      description: If extraction, communities or a question are involved, include the project's graph settings and the question or document, with private content removed. The query id (GET .../queries/{id}) and the request id from the error help too.
       placeholder: |
         1. make up && make demo
         2. ...
@@ -29,12 +29,14 @@ body:
       label: Area
       options:
         - Ingestion (parsing, cleaning, chunking)
-        - Embeddings or indexing
-        - Retrieval, fusion or reranking
-        - Answers and citations
-        - Evaluation (datasets, runs, metrics, the gate)
+        - Embeddings
+        - Entity and relation extraction
+        - Entity resolution and merging
+        - Communities and reports
+        - Search and citations
+        - Graph explorer
         - Dashboard
-        - SDK or CLI
+        - CLI
         - API
         - Deployment
         - Other
@@ -42,7 +44,7 @@ body:
     id: answerer
     attributes:
       label: Answer provider
-      options: [Extractive (built-in), OpenAI-compatible, Ollama, Not answer specific]
+      options: [Local (built-in), OpenAI-compatible, Ollama, Not provider specific]
   - type: dropdown
     id: env
     attributes:

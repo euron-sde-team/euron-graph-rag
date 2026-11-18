@@ -19,8 +19,8 @@ Node.js 22 with pnpm 9 (`corepack enable`).
 
 ```bash
 make up          # Postgres (pgvector), Valkey, the AWS emulator (provisioned by Terraform), api, worker, web
-make demo        # a demo project: corpus, three pipeline versions, datasets, evaluation runs and traffic
-make test        # unit tests for the API, the SDK (pytest) and the web app (Vitest)
+make demo        # a demo project: eighteen notes, the graph, communities, reports and two weeks of questions
+make test        # unit tests for the API (pytest) and the web app (Vitest)
 ```
 
 [docs/guides/quickstart-local.md](docs/guides/quickstart-local.md) walks through the local
@@ -42,9 +42,10 @@ make sanitize                          # no credentials, account ids or resource
 
 **Layers (api).** Routes declare the URL, the request and response models and the access
 dependency, nothing else. Services hold the business rules, transactions and cache
-invalidation. Repositories are the only code that touches the database. The retrieval,
-chunking and evaluation math lives in pure modules (`retrieval/`, `ingestion/`,
-`evaluation/`) with no I/O, so it is unit tested without services.
+invalidation. Repositories are the only code that touches the database. The graph
+logic (extraction, resolution, communities, reports, answer composition), the embedding
+providers and the parsers live in pure modules (`graph/`, `ai/`, `ingestion/`) with no I/O, so
+they are unit tested without services.
 [apps/api/README.md](apps/api/README.md) has the rules and a reference resource to copy.
 
 **Project isolation is structural.** Every repository method that reads project data takes
@@ -52,13 +53,14 @@ the project id as a required argument and filters by it, and the access dependen
 the caller's role before a route runs. The integration suite calls every project route as a
 non-member and asserts that nothing is returned or changed.
 
-**Pipeline versions are immutable.** A change to chunking, cleaning, embeddings or retrieval
-defaults is a new version, so an evaluation run always names exactly what it measured. Index
-settings are fingerprinted: two versions with the same index settings share one index.
+**Counts are derived.** Mention counts, relation weights, degrees and importance come from the
+mention and evidence rows (`GraphRepository.recount`), never from in-place increments, so
+reprocessing a document, deleting it or merging entities cannot double count. See
+[ADR 0004](docs/architecture/adr/0004-derived-counts-and-evidence-rows.md).
 
-**Metrics are deterministic.** A new metric ships in `evaluation/metrics.py` with unit tests
-that pin its value on hand-computed examples, and is documented in
-[the low-level design](docs/architecture/LLD.md#metrics).
+**Providers are deterministic first.** Anything that calls a model has a local implementation
+behind the same interface, so tests, the demo and screenshots need no network. A new extraction
+rule or lexicon entry ships with a unit test that pins its output.
 
 **Configuration is validated.** A new environment variable is declared in
 `apps/api/src/graphrag/core/config.py` and documented in
@@ -76,12 +78,12 @@ strict TypeScript for the web app.
 
 ## Commit messages
 
-Imperative mood with a scope: `retrieval: add weighted score fusion`,
-`web: show per-question deltas in run comparisons`. Explain the *why* in the body when it is
+Imperative mood with a scope: `graph: add acronym matching to entity resolution`,
+`web: show a build's merges on the documents page`. Explain the *why* in the body when it is
 not obvious.
 
 ## Architecture decisions
 
-A change that alters a documented decision (index storage, fusion, evaluation semantics,
-queueing, model providers, deployment topology) needs a new ADR in
+A change that alters a documented decision (graph storage, community detection, entity
+resolution, queueing, model providers, deployment topology) needs a new ADR in
 [docs/architecture/adr/](docs/architecture/adr/), using the existing ones as a template.

@@ -1,7 +1,7 @@
 name: e2e
 
 # The full stack on the Floci AWS emulator: Terraform provisions SQS, S3, KMS and Secrets
-# Manager, the demo seed ingests the corpus and runs the evaluations through the real worker,
+# Manager, the demo seed ingests the notes and builds the graph through the real worker,
 # then Playwright drives the web app and the QA crawl checks every page at desktop and mobile
 # widths with axe.
 on:
@@ -35,8 +35,8 @@ jobs:
       - run: pnpm --filter @graphrag/e2e exec playwright install --with-deps chromium
       - name: Stack up and demo data
         run: make up demo
-      # The QA crawl and the screenshots only read; the end-to-end suite adds a pipeline
-      # version, a run and an API key, so it goes last.
+      # The QA crawl and the screenshots only read; the end-to-end suite adds and deletes a
+      # document and an API key, so it goes last.
       - name: QA crawl (desktop and mobile, axe)
         run: make qa
       - name: Browser tests

@@ -7,7 +7,7 @@ validation, the sanitization scan) runs there.
 
 | Workflow | What it runs |
 | --- | --- |
-| [`ci.yml`](ci.yml) | Lint, typecheck, unit tests, the web build, the OpenAPI document check, the sanitization scan, then the API and SDK integration suite on PostgreSQL 16 with pgvector, Valkey 8 and Floci |
+| [`ci.yml`](ci.yml) | Lint, typecheck, unit tests, the web build, the OpenAPI document check, the sanitization scan, then the API integration suite on PostgreSQL 16 with pgvector, Valkey 8 and Floci |
 | [`security.yml`](security.yml) | gitleaks over the full history, CodeQL (Python, JavaScript and TypeScript), `pnpm audit` and `pip-audit` |
 | [`terraform.yml`](terraform.yml) | `terraform fmt` and `validate` for every environment, tflint, checkov |
 | [`docker.yml`](docker.yml) | Multi-architecture image builds for `api` (also the worker) and `web`, pushed to GHCR on version tags |
