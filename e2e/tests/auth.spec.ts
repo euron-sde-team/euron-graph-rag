@@ -48,7 +48,7 @@ test("the theme toggle switches to dark and back", async ({ page }) => {
   await page.getByRole("button", { name: "Account menu" }).click();
   await page.getByRole("menuitem", { name: "Dark theme" }).click();
   await expect(page.locator("html")).toHaveClass(/dark/);
-  await page.getByRole("button", { name: "Account menu" }).click();
+  // The menu stays open after a theme change, and its item now offers the way back.
   await page.getByRole("menuitem", { name: "Light theme" }).click();
   await expect(page.locator("html")).not.toHaveClass(/dark/);
 });

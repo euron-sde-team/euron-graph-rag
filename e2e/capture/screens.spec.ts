@@ -73,11 +73,12 @@ test("overview, the explorer, entities, communities, documents and settings", as
   await shot(page, "04-graph-communities");
   await tourFrame(page, 2600);
 
-  const northgate = await apiGet<{ items: { id: string }[] }>(
+  const northgate = await apiGet<{ items: { id: string; name: string }[] }>(
     page,
-    "/graph/entities?q=Northgate&limit=1",
+    "/graph/entities?q=Northgate&limit=10",
   );
-  await page.goto(`${BASE}/graph?focus=${northgate.items[0]!.id}`);
+  const focus = northgate.items.find((e) => e.name === "Northgate Sensors")!;
+  await page.goto(`${BASE}/graph?focus=${focus.id}`);
   await expect(page.getByText(/Neighbourhood of Northgate Sensors/)).toBeVisible();
   await shot(page, "05-graph-neighbourhood");
 

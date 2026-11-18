@@ -26,7 +26,7 @@ test("a pasted note travels the whole pipeline into the graph, and deleting it r
   await page.getByRole("button", { name: "Add documents" }).click();
   await page.getByRole("tab", { name: "Text" }).click();
   await page.getByLabel("Title").fill("Orbital Freight pilot");
-  await page.getByLabel("Text", { exact: true }).fill(NOTE);
+  await page.locator("#source-text").fill(NOTE);
   await page.getByRole("button", { name: "Add text" }).click();
   const row = page.getByRole("row", { name: /Orbital Freight pilot/ });
   await expect(row).toBeVisible();

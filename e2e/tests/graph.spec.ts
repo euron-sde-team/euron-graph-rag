@@ -28,7 +28,9 @@ test("filters narrow the graph by type and by text", async ({ page }) => {
   await expect
     .poll(async () => page.getByRole("button", { name: /, Person, / }).count())
     .toBeGreaterThan(3);
-  expect(await page.getByRole("button", { name: /, Organization, / }).count()).toBe(0);
+  await expect
+    .poll(async () => page.getByRole("button", { name: /, Organization, / }).count())
+    .toBe(0);
   await page.getByRole("button", { name: /^Person/ }).click();
   await page.getByLabel("Filter entities").fill("Voltaic");
   await expect(page.getByRole("button", { name: /^Voltaic Cells/ })).toBeVisible();
@@ -43,6 +45,7 @@ test("focusing an entity shows only its neighbourhood, and the whole graph comes
   await signIn(page, "owner");
   await page.goto(GRAPH);
   await page.getByRole("button", { name: /^Northgate Sensors, / }).dblclick();
+  await expect(page.getByText(/Neighbourhood of Northgate Sensors/)).toBeVisible();
   await expect(page.getByText(/Neighbourhood of Northgate Sensors/)).toBeVisible();
   await expect(page).toHaveURL(/focus=/);
   const near = await page.getByRole("button", { name: NODES }).count();

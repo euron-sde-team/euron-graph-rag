@@ -17,7 +17,7 @@ test("the type filter and sorting change the table", async ({ page }) => {
   await page.goto(`/p/${PROJECT}/entities`);
   await page.getByLabel("Type").selectOption("PERSON");
   await expect(page.getByRole("cell", { name: "Mira Okafor" })).toBeVisible();
-  await expect(page.getByRole("cell", { name: "Helios Robotics" })).toHaveCount(0);
+  await expect(page.getByRole("cell", { name: "Helios Robotics", exact: true })).toHaveCount(0);
   await page.getByLabel("Sort").selectOption("name");
   await expect(page.getByRole("table").getByRole("button").first()).toHaveText("Amara Nwosu");
 });

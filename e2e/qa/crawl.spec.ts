@@ -102,15 +102,13 @@ for (const viewport of VIEWPORTS) {
       );
       const entities = await apiGet<{ items: { id: string; name: string }[] }>(
         page,
-        "/graph/entities?q=Helios&limit=1",
+        "/graph/entities?q=Northgate&limit=10",
       );
-      expect(
-        documents.items[0] && communities.items[0] && entities.items[0],
-        "seeded",
-      ).toBeTruthy();
+      const focus = entities.items.find((e) => e.name === "Northgate Sensors");
+      expect(documents.items[0] && communities.items[0] && focus, "seeded").toBeTruthy();
 
       await visit(crawl, "overview", base, "Entities by type");
-      await visit(crawl, "documents", `${base}/documents`, "Ready");
+      await visit(crawl, "documents", `${base}/documents`, "Graph build");
       await visit(
         crawl,
         "document",
@@ -123,12 +121,7 @@ for (const viewport of VIEWPORTS) {
       await page.keyboard.press("Enter");
       await expect(page.getByRole("heading", { name: "Source passages" })).toBeVisible();
       await inspect(crawl, "graph-selected");
-      await visit(
-        crawl,
-        "graph-focus",
-        `${base}/graph?focus=${entities.items[0]!.id}`,
-        "Neighbourhood of",
-      );
+      await visit(crawl, "graph-focus", `${base}/graph?focus=${focus!.id}`, "Neighbourhood of");
       await visit(crawl, "entities", `${base}/entities`, "Select a row");
       await page.getByRole("button", { name: "Helios Robotics" }).first().click();
       await expect(page.getByRole("heading", { name: "Source passages" })).toBeVisible();
