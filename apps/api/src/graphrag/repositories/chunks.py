@@ -203,4 +203,10 @@ class ChunkRepository(Repository):
                 Chunk.embedding_dim == dim,
             )
         )
-        return {row.id: np.asarray(row.embedding, dtype=np.float32) for row in result.all()}
+        return {row.id: _as_array(row.embedding) for row in result.all()}
+
+
+def _as_array(value: Any) -> np.ndarray:
+    """The pgvector codec hands back its own vector type; the search math wants numpy."""
+    raw = value.to_numpy() if hasattr(value, "to_numpy") else value
+    return np.asarray(raw, dtype=np.float32)
