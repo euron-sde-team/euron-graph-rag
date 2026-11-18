@@ -87,6 +87,18 @@ class EntityFilter:
 
 
 class GraphRepository(Repository):
+    async def lock(self, project_id: uuid.UUID) -> None:
+        """Serialize writers of one project's graph for the rest of the transaction.
+
+        Extraction, duplicate merging and manual edits all create, move and delete the same
+        entity rows; two of them at once would collide on the (project, key) uniqueness or
+        point a mention at an entity that is being merged away. Readers are not blocked.
+        """
+        await self.session.execute(
+            text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+            {"key": f"graph:{project_id}"},
+        )
+
     # Entities ---------------------------------------------------------------------------
 
     async def alias_index(self, project_id: uuid.UUID) -> dict[str, uuid.UUID]:

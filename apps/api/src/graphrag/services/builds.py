@@ -290,6 +290,7 @@ class BuildService:
     async def _resolve_duplicates(self, project_id: uuid.UUID) -> int:
         async with self.c.db.session() as session:
             graph = GraphRepository(session)
+            await graph.lock(project_id)
             entities = await graph.all_entities(project_id)
             groups = find_duplicates(
                 [

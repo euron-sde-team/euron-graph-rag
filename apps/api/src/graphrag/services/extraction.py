@@ -165,6 +165,7 @@ class ExtractionService:
         async with self.c.db.session() as session:
             graph = GraphRepository(session)
             documents = DocumentRepository(session)
+            await graph.lock(project_id)
             document = await documents.get_for_update(document_id)
             project = await session.get(Project, project_id)
             if document is None or project is None:

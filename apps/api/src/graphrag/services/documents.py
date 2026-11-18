@@ -371,6 +371,7 @@ class DocumentService:
         with it, then entities and relations nothing else mentions are dropped."""
         key = document.storage_key
         graph = GraphRepository(self.session)
+        await graph.lock(project.id)
         await self.session.delete(document)
         await self.session.flush()
         removed_entities, removed_relations = await graph.recount(project.id)

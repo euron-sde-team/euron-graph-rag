@@ -232,6 +232,7 @@ class GraphService:
         type_: str | None,
         description: str | None,
     ) -> EntityOut:
+        await self.graph.lock(project.id)
         entity = await self.graph.get_entity(project.id, entity_id)
         if entity is None:
             raise NotFoundError("Entity not found.")
@@ -268,6 +269,7 @@ class GraphService:
         return EntityOut.model_validate(entity)
 
     async def delete(self, project: Project, principal: Principal, entity_id: uuid.UUID) -> None:
+        await self.graph.lock(project.id)
         entity = await self.graph.get_entity(project.id, entity_id)
         if entity is None:
             raise NotFoundError("Entity not found.")
@@ -326,6 +328,7 @@ class GraphService:
         victims = [i for i in dict.fromkeys(entity_ids) if i != survivor_id]
         if not victims:
             raise UnprocessableError("Pick at least one other entity to merge in.")
+        await self.graph.lock(project.id)
         found = await self.graph.get_entities(project.id, [survivor_id, *victims])
         if len(found) != len(victims) + 1:
             raise NotFoundError("One of the entities was not found.")

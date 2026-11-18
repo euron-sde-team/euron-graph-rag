@@ -191,3 +191,35 @@ async def test_a_document_without_text_fails_with_a_readable_reason(
     async with sqs.db.session() as session:
         document = await session.get(Document, document_id)
     assert document is not None and "no text" in (document.error or "")
+
+
+async def test_documents_naming_the_same_entities_can_be_extracted_at_once(
+    sqs: Container, target: tuple[Principal, Project], aws: AwsResources
+) -> None:
+    """Two workers extracting documents of one project would insert the same new entity twice
+    without the per-project write lock."""
+    principal, project = target
+    async with sqs.db.session() as session:
+        outcome = await DocumentService(sqs, session).import_sources(
+            project,
+            principal,
+            [
+                TextSource(
+                    title=f"Concurrent {i}",
+                    text=f"Orion Labs partnered with Nova Systems in 2024, round {i}. "
+                    "Dr. Ana Duarte founded Orion Labs in Lisbon.",
+                    external_id=f"concurrent-{i}",
+                )
+                for i in range(8)
+            ],
+        )
+    ids = [d.id for d in outcome.created]
+    service = IngestionService(sqs)
+    await asyncio.gather(*(service.parse(i, final_attempt=True) for i in ids))
+    results = await asyncio.gather(*(service.extraction.run(i, final_attempt=True) for i in ids))
+    assert all(r == "done" for r in results)
+    async with sqs.db.session() as session:
+        rows = (await session.execute(select(Document).where(Document.id.in_(ids)))).scalars().all()
+    assert {d.status for d in rows} == {JobStatus.READY}
+    assert all(d.entity_count >= 3 for d in rows)
+    lose_messages(aws.queue_url)
