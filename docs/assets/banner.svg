@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 340" role="img" aria-labelledby="t d">
+<title id="t">Euron GraphRAG</title><desc id="d">Documents become a knowledge graph of entities and relations, grouped into communities, that answers questions with citations.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f1033"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient><radialGradient id="glow" cx="0.78" cy="0.45" r="0.5"><stop offset="0" stop-color="#6366f1" stop-opacity="0.45"/><stop offset="1" stop-color="#6366f1" stop-opacity="0"/></radialGradient></defs>
+<rect width="1280" height="340" rx="18" fill="url(#bg)"/><rect width="1280" height="340" rx="18" fill="url(#glow)"/>
+<line x1="930" y1="92" x2="1010" y2="150" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1010" y1="150" x2="1090" y2="88" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1090" y1="88" x2="1150" y2="170" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1010" y1="150" x2="980" y2="230" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="980" y1="230" x2="1075" y2="250" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1150" y1="170" x2="1075" y2="250" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="930" y1="92" x2="880" y2="185" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="880" y1="185" x2="980" y2="230" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="930" y1="92" x2="790" y2="120" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="790" y1="120" x2="880" y2="185" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="810" y1="260" x2="880" y2="185" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="810" y1="260" x2="980" y2="230" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1075" y1="250" x2="1180" y2="260" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1150" y1="170" x2="1180" y2="260" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<line x1="1090" y1="88" x2="1075" y2="250" stroke="#a5b4fc" stroke-opacity="0.45" stroke-width="2"/>
+<circle cx="930" cy="92" r="21" fill="#a5b4fc" fill-opacity="0.15"/><circle cx="930" cy="92" r="15" fill="#a5b4fc"/>
+<circle cx="1010" cy="150" r="17" fill="#2dd4bf" fill-opacity="0.15"/><circle cx="1010" cy="150" r="11" fill="#2dd4bf"/>
+<circle cx="1090" cy="88" r="19" fill="#f472b6" fill-opacity="0.15"/><circle cx="1090" cy="88" r="13" fill="#f472b6"/>
+<circle cx="1150" cy="170" r="16" fill="#fbbf24" fill-opacity="0.15"/><circle cx="1150" cy="170" r="10" fill="#fbbf24"/>
+<circle cx="980" cy="230" r="18" fill="#38bdf8" fill-opacity="0.15"/><circle cx="980" cy="230" r="12" fill="#38bdf8"/>
+<circle cx="1075" cy="250" r="21" fill="#c084fc" fill-opacity="0.15"/><circle cx="1075" cy="250" r="15" fill="#c084fc"/>
+<circle cx="880" cy="185" r="15" fill="#a3e635" fill-opacity="0.15"/><circle cx="880" cy="185" r="9" fill="#a3e635"/>
+<circle cx="1180" cy="260" r="14" fill="#a5b4fc" fill-opacity="0.15"/><circle cx="1180" cy="260" r="8" fill="#a5b4fc"/>
+<circle cx="790" cy="120" r="14" fill="#f472b6" fill-opacity="0.15"/><circle cx="790" cy="120" r="8" fill="#f472b6"/>
+<circle cx="810" cy="260" r="16" fill="#2dd4bf" fill-opacity="0.15"/><circle cx="810" cy="260" r="10" fill="#2dd4bf"/>
+<g font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<rect x="64" y="64" width="44" height="44" rx="11" fill="#4338ca"/><path d="M76 98 L86 78 L99 96 M76 98 L99 96" fill="none" stroke="#fff" stroke-opacity="0.75" stroke-width="2.4" stroke-linejoin="round"/><circle cx="86" cy="78" r="5.5" fill="#fff"/><circle cx="76" cy="98" r="4.4" fill="#fff" fill-opacity="0.9"/><circle cx="99" cy="96" r="4" fill="#fff" fill-opacity="0.8"/>
+<text x="124" y="95" font-size="22" font-weight="600" fill="#c7d2fe">Euron</text>
+<text x="64" y="176" font-size="60" font-weight="700" fill="#ffffff" letter-spacing="-1.5">GraphRAG</text>
+<text x="64" y="222" font-size="23" fill="#c7d2fe">Turn documents into a knowledge graph.</text>
+<text x="64" y="254" font-size="23" fill="#c7d2fe">Ask questions that follow the connections, with citations.</text>
+<rect x="64" y="282" width="230" height="30" rx="15" fill="#ffffff" fill-opacity="0.1" stroke="#a5b4fc" stroke-opacity="0.4"/><text x="78" y="302" font-size="14" fill="#e0e7ff">Entities and relations</text>
+<rect x="290" y="282" width="240" height="30" rx="15" fill="#ffffff" fill-opacity="0.1" stroke="#a5b4fc" stroke-opacity="0.4"/><text x="304" y="302" font-size="14" fill="#e0e7ff">Communities and reports</text>
+<rect x="536" y="282" width="286" height="30" rx="15" fill="#ffffff" fill-opacity="0.1" stroke="#a5b4fc" stroke-opacity="0.4"/><text x="550" y="302" font-size="14" fill="#e0e7ff">Local, global, hybrid search</text>
+</g></svg>
