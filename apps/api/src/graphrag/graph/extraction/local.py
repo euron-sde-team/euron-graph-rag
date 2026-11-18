@@ -301,10 +301,7 @@ class _Occurrence:
 
 
 def extract_chunks(chunks: Sequence[ChunkInput], allowed: Sequence[str]) -> list[ChunkExtraction]:
-    sentences: list[list[str]] = [
-        [text[s:e].strip() for s, e in sentence_spans(text)]
-        for text in (normalize(f"{c.heading}. {c.text}" if c.heading else c.text) for c in chunks)
-    ]
+    sentences = [_split(chunk.text) for chunk in chunks]
     occurrences = [
         occ
         for ci, sents in enumerate(sentences)
@@ -363,6 +360,15 @@ class RuleExtractor:
 
 
 # Scanning -------------------------------------------------------------------------------------
+
+
+def _split(text: str) -> list[str]:
+    """Sentences, never crossing a line break: a heading is not the start of the next sentence."""
+    sentences: list[str] = []
+    for line in normalize(text).split("\n"):
+        line = line.strip().lstrip("#").strip()
+        sentences.extend(line[s:e].strip() for s, e in sentence_spans(line))
+    return [s for s in sentences if s]
 
 
 def _scan_sentence(chunk: int, index: int, sentence: str) -> list[_Occurrence]:
