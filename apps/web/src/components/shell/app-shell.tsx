@@ -51,25 +51,27 @@ function GraphSummary({ project }: { project: string }) {
   }
   const busy = data.pipeline.queued + data.pipeline.processing;
   return (
-    <dl className="space-y-1.5 px-2.5 text-[12.5px]">
-      {[
-        ["Documents", data.counts.documents],
-        ["Entities", data.counts.entities],
-        ["Relations", data.counts.relations],
-        ["Communities", data.counts.communities],
-      ].map(([label, value]) => (
-        <div key={label} className="flex justify-between">
-          <dt className="text-muted-foreground">{label}</dt>
-          <dd className="font-medium tabular-nums">{formatCompact(Number(value))}</dd>
-        </div>
-      ))}
+    <div className="px-2.5">
+      <dl className="space-y-1.5 text-[12.5px]">
+        {[
+          ["Documents", data.counts.documents],
+          ["Entities", data.counts.entities],
+          ["Relations", data.counts.relations],
+          ["Communities", data.counts.communities],
+        ].map(([label, value]) => (
+          <div key={label} className="flex justify-between">
+            <dt className="text-muted-foreground">{label}</dt>
+            <dd className="font-medium tabular-nums">{formatCompact(Number(value))}</dd>
+          </div>
+        ))}
+      </dl>
       {busy || data.pending_build ? (
         <p className="text-primary flex items-center gap-1.5 pt-1 text-[12px]">
           <span className="bg-primary animate-pulse-dot size-1.5 rounded-full" aria-hidden />
           {busy ? `${busy} document${busy > 1 ? "s" : ""} in the pipeline` : "Building communities"}
         </p>
       ) : null}
-    </dl>
+    </div>
   );
 }
 

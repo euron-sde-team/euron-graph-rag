@@ -241,7 +241,7 @@ export function EntityPanel({
             ["Sources", entity.sources.length],
           ].map(([label, value]) => (
             <div key={label} className="bg-muted rounded-lg px-2 py-1.5">
-              <dt className="text-subtle text-[11px]">{label}</dt>
+              <dt className="text-muted-foreground text-[11px]">{label}</dt>
               <dd className="text-[15px] font-semibold tabular-nums">
                 {formatNumber(Number(value))}
               </dd>

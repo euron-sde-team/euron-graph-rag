@@ -15,9 +15,7 @@ export function Card({ className, ...props }: ComponentProps<"div">) {
 }
 
 export function CardHeader({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div className={cn("flex items-start justify-between gap-4 px-5 pt-4", className)} {...props} />
-  );
+  return <div className={cn("flex flex-col gap-1 px-5 pt-4", className)} {...props} />;
 }
 
 export function CardTitle({ className, ...props }: ComponentProps<"h3">) {

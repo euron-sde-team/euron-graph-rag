@@ -76,7 +76,9 @@ function Branch({
           <span className={cn("min-w-0 flex-1 truncate", depth === 0 && "font-medium")}>
             {node.title}
           </span>
-          <span className="text-subtle text-[11.5px] tabular-nums">{node.entity_count}</span>
+          <span className="text-muted-foreground text-[11.5px] tabular-nums">
+            {node.entity_count}
+          </span>
         </button>
       </div>
       {expanded && kids.length ? (
