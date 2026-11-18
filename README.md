@@ -158,7 +158,7 @@ work around it:
 | Vectors | pgvector HNSW, widths 384, 768, 1024, 1536 |
 | Tenancy | Projects, owner, editor and viewer roles, project-bound API keys |
 | Runs on | Docker Compose with an AWS emulator, or AWS (ECS, RDS, ElastiCache, S3, SQS) |
-| Tests | {{UNIT_PY}} Python unit, {{UNIT_WEB}} web unit, {{INTEGRATION}} integration, {{E2E}} browser |
+| Tests | 144 Python unit, 26 web unit, 39 integration, 26 browser |
 
 ## 🖼️ Screenshots
 
@@ -353,11 +353,11 @@ report vulnerabilities as described in [SECURITY.md](SECURITY.md).
 
 | Suite | Count | Command |
 | --- | --- | --- |
-| API unit (pytest) | {{UNIT_PY}} | `make test` |
-| Web unit (Vitest) | {{UNIT_WEB}} | `make test` |
-| API integration (PostgreSQL, Valkey, Floci) | {{INTEGRATION}} | `make test-integration` |
-| Browser end to end (Playwright) | {{E2E}} | `make e2e` |
-| QA crawl (desktop and mobile, axe) | {{QA}} | `make qa` |
+| API unit (pytest) | 144 | `make test` |
+| Web unit (Vitest) | 26 | `make test` |
+| API integration (PostgreSQL, Valkey, Floci) | 39 | `make test-integration` |
+| Browser end to end (Playwright) | 26 | `make e2e` |
+| QA crawl (desktop and mobile, axe) | 4 page crawls | `make qa` |
 
 `make lint typecheck` runs ruff, mypy (strict), ESLint, Prettier and tsc; `make tf-fmt tf-validate
 tf-lint tf-security` covers the Terraform. [Testing guide](docs/guides/testing.md).
