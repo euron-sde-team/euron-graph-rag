@@ -48,6 +48,7 @@ test("focusing an entity shows only its neighbourhood, and the whole graph comes
   await expect(page.getByText(/Neighbourhood of Northgate Sensors/)).toBeVisible();
   await expect(page.getByText(/Neighbourhood of Northgate Sensors/)).toBeVisible();
   await expect(page).toHaveURL(/focus=/);
+  await expect.poll(async () => page.getByRole("button", { name: NODES }).count()).toBeLessThan(40);
   const near = await page.getByRole("button", { name: NODES }).count();
   expect(near).toBeGreaterThan(3);
   await page.getByRole("button", { name: "Show the whole graph" }).click();
