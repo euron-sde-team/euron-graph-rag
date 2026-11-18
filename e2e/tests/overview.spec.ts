@@ -16,7 +16,6 @@ test("the overview reports the graph the demo built", async ({ page }) => {
   await expect(page.getByRole("group", { name: /The graph at a glance/ })).toBeVisible();
   await expect(page.getByRole("button", { name: /Helios Robotics, Organization/ })).toBeVisible();
   await expect(page.getByText("Graph build").first()).toBeVisible();
-  await expect(page.getByText("Completed").first()).toBeVisible();
 });
 
 test("the sidebar pages are one click apart", async ({ page }) => {

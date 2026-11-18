@@ -48,7 +48,7 @@ test("a citation chip jumps to its source card", async ({ page }) => {
 test("past questions can be reopened from the history", async ({ page }) => {
   await signIn(page, "owner");
   await page.goto(`/p/${PROJECT}/playground`);
-  const recent = page.getByRole("complementary").getByRole("button").first();
+  const recent = page.locator("aside button").first();
   await expect(recent).toBeVisible();
   const text = (await recent.locator("p").first().innerText()).trim();
   await recent.click();
