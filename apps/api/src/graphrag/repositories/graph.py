@@ -26,6 +26,8 @@ from sqlalchemy import (
     text,
     update,
 )
+from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.orm import aliased
 
@@ -296,21 +298,19 @@ class GraphRepository(Repository):
         if survivor is None or not victims:
             return
         victim_list = list(victims)
-        mentions = pg_insert(EntityMention).from_select(
-            ["entity_id", "chunk_id", "project_id", "document_id", "surface", "count"],
-            select(
-                literal_column(f"CAST('{survivor_id}' AS uuid)"),
-                EntityMention.chunk_id,
-                EntityMention.project_id,
-                EntityMention.document_id,
-                EntityMention.surface,
-                EntityMention.count,
-            ).where(EntityMention.entity_id.in_(victim_list)),
-        )
+        # Several victims can mention the same chunk: fold them per chunk before the upsert,
+        # which cannot touch one row twice.
         await self.session.execute(
-            mentions.on_conflict_do_update(
-                index_elements=["entity_id", "chunk_id"],
-                set_={"count": EntityMention.count + mentions.excluded.count},
+            text(
+                "INSERT INTO entity_mentions (entity_id, chunk_id, project_id, document_id, "
+                "surface, count) SELECT :survivor, chunk_id, project_id, document_id, "
+                "min(surface), sum(count)::int FROM entity_mentions "
+                "WHERE entity_id = ANY(:victims) GROUP BY chunk_id, project_id, document_id "
+                "ON CONFLICT (entity_id, chunk_id) DO UPDATE "
+                "SET count = entity_mentions.count + EXCLUDED.count"
+            ).bindparams(
+                bindparam("survivor", survivor_id, type_=PG_UUID(as_uuid=True)),
+                bindparam("victims", victim_list, type_=ARRAY(PG_UUID(as_uuid=True))),
             )
         )
         await self.session.execute(
@@ -340,16 +340,16 @@ class GraphRepository(Repository):
             if twin is None:
                 relation.source_id, relation.target_id = source, target
                 continue
-            evidence = pg_insert(RelationEvidence).from_select(
-                ["relation_id", "chunk_id", "project_id", "quote"],
-                select(
-                    literal_column(f"CAST('{twin}' AS uuid)"),
-                    RelationEvidence.chunk_id,
-                    RelationEvidence.project_id,
-                    RelationEvidence.quote,
-                ).where(RelationEvidence.relation_id == relation.id),
+            await self.session.execute(
+                text(
+                    "INSERT INTO relation_evidence (relation_id, chunk_id, project_id, quote) "
+                    "SELECT :twin, chunk_id, project_id, quote FROM relation_evidence "
+                    "WHERE relation_id = :old ON CONFLICT DO NOTHING"
+                ).bindparams(
+                    bindparam("twin", twin, type_=PG_UUID(as_uuid=True)),
+                    bindparam("old", relation.id, type_=PG_UUID(as_uuid=True)),
+                )
             )
-            await self.session.execute(evidence.on_conflict_do_nothing())
             await self.session.delete(relation)
         await self.session.flush()
 
