@@ -158,7 +158,7 @@ variable "api_cpu" {
 }
 
 variable "api_memory" {
-  description = "API task memory (MiB); the embedding model and the reranker need headroom."
+  description = "API task memory (MiB); builds hold a whole project's graph in memory."
   type        = number
   default     = 2048
 }
@@ -176,13 +176,13 @@ variable "api_max_count" {
 }
 
 variable "worker_cpu" {
-  description = "Worker task CPU units (parsing, embedding and evaluation are CPU bound)."
+  description = "Worker task CPU units (parsing, embedding and extraction are CPU bound)."
   type        = number
   default     = 1024
 }
 
 variable "worker_memory" {
-  description = "Worker task memory (MiB); it loads the embedding model and the reranker."
+  description = "Worker task memory (MiB); builds hold a whole project's graph in memory."
   type        = number
   default     = 3072
 }
@@ -242,12 +242,12 @@ variable "alarm_email" {
 }
 
 variable "llm_provider" {
-  description = "Answer generation: none (offline extractive answers), openai (any OpenAI-compatible endpoint) or ollama."
+  description = "Extraction, community reports and answers: local (deterministic, offline), openai (any OpenAI-compatible endpoint) or ollama."
   type        = string
-  default     = "none"
+  default     = "local"
   validation {
-    condition     = contains(["none", "openai", "ollama"], var.llm_provider)
-    error_message = "llm_provider must be none, openai or ollama."
+    condition     = contains(["local", "openai", "ollama"], var.llm_provider)
+    error_message = "llm_provider must be local, openai or ollama."
   }
 }
 
@@ -261,6 +261,32 @@ variable "llm_base_url" {
   description = "Base URL of the OpenAI-compatible endpoint."
   type        = string
   default     = "https://api.openai.com/v1"
+}
+
+variable "embedding_provider" {
+  description = "Embeddings: local (deterministic feature hashing, offline), openai or ollama."
+  type        = string
+  default     = "local"
+  validation {
+    condition     = contains(["local", "openai", "ollama"], var.embedding_provider)
+    error_message = "embedding_provider must be local, openai or ollama."
+  }
+}
+
+variable "embedding_model" {
+  description = "Embedding model name for a hosted provider."
+  type        = string
+  default     = ""
+}
+
+variable "embedding_dim" {
+  description = "Embedding width: 384, 768, 1024 or 1536 (each has an HNSW index)."
+  type        = number
+  default     = 384
+  validation {
+    condition     = contains([384, 768, 1024, 1536], var.embedding_dim)
+    error_message = "embedding_dim must be 384, 768, 1024 or 1536."
+  }
 }
 
 variable "llm_api_key_secret_arn" {

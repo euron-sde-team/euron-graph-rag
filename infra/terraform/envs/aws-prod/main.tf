@@ -45,5 +45,8 @@ module "graphrag" {
   llm_provider           = var.llm_provider
   llm_model              = var.llm_model
   llm_base_url           = var.llm_base_url
+  embedding_provider     = var.embedding_provider
+  embedding_model        = var.embedding_model
+  embedding_dim          = var.embedding_dim
   llm_api_key_secret_arn = var.llm_api_key_secret_arn
 }

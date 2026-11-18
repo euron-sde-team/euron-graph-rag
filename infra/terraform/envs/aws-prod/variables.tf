@@ -58,9 +58,9 @@ variable "alarm_email" {
 }
 
 variable "llm_provider" {
-  description = "none (offline extractive answers), openai (OpenAI-compatible) or ollama."
+  description = "local (deterministic, offline), openai (OpenAI-compatible) or ollama."
   type        = string
-  default     = "none"
+  default     = "local"
 }
 
 variable "llm_model" {
@@ -73,6 +73,24 @@ variable "llm_base_url" {
   description = "OpenAI-compatible endpoint."
   type        = string
   default     = "https://api.openai.com/v1"
+}
+
+variable "embedding_provider" {
+  description = "local (deterministic, offline), openai or ollama."
+  type        = string
+  default     = "local"
+}
+
+variable "embedding_model" {
+  description = "Embedding model name for a hosted provider."
+  type        = string
+  default     = ""
+}
+
+variable "embedding_dim" {
+  description = "Embedding width: 384, 768, 1024 or 1536."
+  type        = number
+  default     = 384
 }
 
 variable "llm_api_key_secret_arn" {

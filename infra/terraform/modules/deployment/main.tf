@@ -145,6 +145,9 @@ locals {
     LLM_PROVIDER        = var.llm_provider
     LLM_MODEL           = var.llm_model
     LLM_BASE_URL        = var.llm_base_url
+    EMBEDDING_PROVIDER  = var.embedding_provider
+    EMBEDDING_MODEL     = var.embedding_model
+    EMBEDDING_DIM       = tostring(var.embedding_dim)
   }, var.extra_environment)
 
   app_secrets = concat(
