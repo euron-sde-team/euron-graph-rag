@@ -168,7 +168,7 @@ export default function PlaygroundPage() {
                   </div>
                   <FieldHint>{MODES.find((m) => m.mode === mode)?.hint}</FieldHint>
                 </fieldset>
-                <div className="grid grid-cols-3 gap-3 sm:max-w-md">
+                <div className="grid grid-cols-2 gap-3 sm:max-w-md sm:grid-cols-3">
                   <div className="space-y-1.5">
                     <Label htmlFor="top-k">Passages</Label>
                     <NativeSelect
