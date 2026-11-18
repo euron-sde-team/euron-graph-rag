@@ -76,7 +76,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "S105", "S106", "PLR2004", "E501"]
+"tests/**" = ["S101", "S105", "S106", "PLR2004", "E501", "PT018"]
 "src/graphrag/migrations/**" = ["E501"]
 "src/graphrag/demo/corpus.py" = ["E501"]  # long lines are dataset content
 "src/graphrag/graph/extraction/local.py" = ["E501"]  # verb patterns read best on one line
