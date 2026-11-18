@@ -101,17 +101,17 @@ export function computeLayout(
       "link",
       forceLink<SimNode, SimulationLinkDatum<SimNode>>(links)
         .id((d) => d.id)
-        .distance((_, i) => 62 - Math.min(24, (kept[i]?.weight ?? 1) * 6))
-        .strength(0.7),
+        .distance((_, i) => 78 - Math.min(24, (kept[i]?.weight ?? 1) * 6))
+        .strength(0.5),
     )
-    .force("charge", forceManyBody<SimNode>().strength(-190).distanceMax(420))
+    .force("charge", forceManyBody<SimNode>().strength(-380).distanceMax(360))
     .force(
       "collide",
-      forceCollide<SimNode>((d) => d.radius + 7),
+      forceCollide<SimNode>((d) => d.radius + 14),
     )
     // Weak pulls toward the middle keep disconnected clusters in view without crushing them.
-    .force("x", forceX<SimNode>(width / 2).strength(0.07))
-    .force("y", forceY<SimNode>(height / 2).strength(0.09))
+    .force("x", forceX<SimNode>(width / 2).strength(0.16))
+    .force("y", forceY<SimNode>(height / 2).strength(0.26))
     .stop();
   simulation.tick(ticks);
   return new Map(sim.map((n) => [n.id, { x: n.x ?? width / 2, y: n.y ?? height / 2 }]));
@@ -119,26 +119,22 @@ export function computeLayout(
 
 export type Bounds = { minX: number; minY: number; maxX: number; maxY: number };
 
-export function boundsOf(points: Iterable<Point>, padding = 0): Bounds | null {
-  let bounds: Bounds | null = null;
-  for (const { x, y } of points) {
-    bounds = bounds
-      ? {
-          minX: Math.min(bounds.minX, x),
-          minY: Math.min(bounds.minY, y),
-          maxX: Math.max(bounds.maxX, x),
-          maxY: Math.max(bounds.maxY, y),
-        }
-      : { minX: x, minY: y, maxX: x, maxY: y };
-  }
-  return (
-    bounds && {
-      minX: bounds.minX - padding,
-      minY: bounds.minY - padding,
-      maxX: bounds.maxX + padding,
-      maxY: bounds.maxY + padding,
-    }
-  );
+/**
+ * The box around `points`. With `trim` (a fraction), the outermost points on each side are
+ * ignored, so a few stray nodes do not shrink the whole picture to fit them.
+ */
+export function boundsOf(points: Iterable<Point>, padding = 0, trim = 0): Bounds | null {
+  const all = [...points];
+  if (!all.length) return null;
+  const cut = Math.floor(all.length * trim);
+  const xs = all.map((p) => p.x).sort((a, b) => a - b);
+  const ys = all.map((p) => p.y).sort((a, b) => a - b);
+  return {
+    minX: (xs[cut] ?? 0) - padding,
+    maxX: (xs[xs.length - 1 - cut] ?? 0) + padding,
+    minY: (ys[cut] ?? 0) - padding,
+    maxY: (ys[ys.length - 1 - cut] ?? 0) + padding,
+  };
 }
 
 /** The scale and offset that fit `bounds` inside a viewport, centred. */

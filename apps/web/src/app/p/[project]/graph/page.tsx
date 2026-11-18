@@ -36,7 +36,7 @@ function Explorer() {
     q,
     types,
     focus,
-    hops: 2,
+    hops: 1,
     level,
     limit,
   });

@@ -91,7 +91,7 @@ export function ForceGraph({
     [nodes, edges, height],
   );
   const fitView = useMemo(
-    () => fitTransform(boundsOf(layout.values(), 28), WIDTH, height),
+    () => fitTransform(boundsOf(layout.values(), 40, 0.04), WIDTH, height),
     [layout, height],
   );
   const [user, setUser] = useState<UserView | null>(null);
@@ -313,7 +313,7 @@ export function ForceGraph({
                 tabIndex={0}
                 aria-label={`${node.name}, ${typeLabel(node.type)}, ${node.degree} connections`}
                 aria-pressed={selected}
-                opacity={inNear ? 1 : 0.18}
+                opacity={inNear ? 1 : 0.28}
                 className="cursor-pointer outline-none [&:focus-visible>circle:first-child]:stroke-[var(--ring)] [&:focus-visible>circle:first-child]:stroke-[3px]"
                 onPointerDown={(e) => onNodeDown(e, node.id)}
                 onPointerUp={() => onUp(node.id)}
