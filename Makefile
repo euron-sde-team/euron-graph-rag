@@ -63,26 +63,22 @@ ps: ## Show stack status
 
 lint: ## Lint and check formatting (ruff, ESLint, Prettier)
 	$(API) ruff check . && $(API) ruff format --check .
-	$(SDK) ruff check . && $(SDK) ruff format --check .
 	pnpm lint
 	pnpm format:check
 
 format: ## Format every file (ruff, Prettier)
 	$(API) ruff check --fix . && $(API) ruff format .
-	$(SDK) ruff check --fix . && $(SDK) ruff format .
 	pnpm format
 
-typecheck: ## Typecheck (mypy strict on the server and the SDK, tsc)
+typecheck: ## Typecheck (mypy strict on the server, tsc)
 	$(API) mypy
-	$(SDK) mypy
 	pnpm typecheck
 
-test: ## Unit tests (pytest for the server and the SDK, Vitest)
+test: ## Unit tests (pytest for the server, Vitest)
 	$(API) pytest tests/unit -q
-	$(SDK) pytest -q
 	pnpm test
 
-test-integration: ## API and SDK integration tests against real Postgres, Valkey and Floci (started if needed)
+test-integration: ## API integration tests against real Postgres, Valkey and Floci (started if needed)
 	@scripts/test-deps.sh
 	$(API) pytest tests/integration -q -m integration
 
