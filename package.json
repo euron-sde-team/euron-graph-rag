@@ -1,0 +1,26 @@
+{
+  "name": "euron-graph-rag",
+  "private": true,
+  "description": "Euron GraphRAG: build, measure and serve retrieval pipelines.",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @graphrag/web dev",
+    "lint": "pnpm -r --parallel lint",
+    "typecheck": "pnpm -r --parallel typecheck",
+    "test": "pnpm --filter @graphrag/web test",
+    "build": "pnpm --filter @graphrag/web build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "e2e": "pnpm --filter @graphrag/e2e test",
+    "qa": "pnpm --filter @graphrag/e2e qa",
+    "capture": "pnpm --filter @graphrag/e2e capture"
+  },
+  "devDependencies": {
+    "prettier": "3.9.10",
+    "prettier-plugin-tailwindcss": "0.8.1"
+  }
+}
