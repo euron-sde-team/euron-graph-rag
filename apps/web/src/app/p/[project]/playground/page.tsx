@@ -234,7 +234,7 @@ export default function PlaygroundPage() {
                         key={q}
                         variant="secondary"
                         size="sm"
-                        className="h-auto py-1.5 text-left whitespace-normal"
+                        className="h-auto max-w-full shrink py-1.5 text-left whitespace-normal"
                         onClick={() => void run({ question: q, mode: m })}
                       >
                         {q}
