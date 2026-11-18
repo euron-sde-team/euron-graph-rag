@@ -119,7 +119,7 @@ export default function PlaygroundPage() {
         title="Query playground"
         description="Ask a question and see exactly which entities, relations and community reports answered it."
       />
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="min-w-0 space-y-5">
           <Card>
             <CardContent className="pt-5">

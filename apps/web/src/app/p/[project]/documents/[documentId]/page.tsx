@@ -78,7 +78,7 @@ export default function DocumentPage() {
           </Card>
         ))}
       </div>
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <Card>
           <CardHeader>
             <CardTitle>Passages</CardTitle>

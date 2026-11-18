@@ -175,7 +175,7 @@ export default function EntitiesPage() {
             </span>
           </div>
           {entities.error ? <ErrorNotice message={entities.error.message} /> : null}
-          <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_24rem]">
             <Card className="overflow-hidden">
               {!entities.data ? (
                 <Skeleton className="h-96" />

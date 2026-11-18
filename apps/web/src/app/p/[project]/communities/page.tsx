@@ -269,7 +269,7 @@ function Communities() {
           />
         </Card>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-[22rem_minmax(0,1fr)]">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[22rem_minmax(0,1fr)]">
           <Card className="h-fit">
             <CardContent className="pt-4">
               <p className="text-subtle mb-2 flex items-center gap-1.5 px-1 text-[11.5px]">

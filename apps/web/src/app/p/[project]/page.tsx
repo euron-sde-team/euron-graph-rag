@@ -133,7 +133,7 @@ export default function OverviewPage() {
               />
             </Card>
           ) : (
-            <div className="grid gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+            <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
               <Card>
                 <CardHeader className="flex-row items-start justify-between gap-3">
                   <div>
@@ -207,7 +207,7 @@ export default function OverviewPage() {
             </div>
           )}
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
             <Card>
               <CardHeader>
                 <CardTitle>Relations by kind</CardTitle>
