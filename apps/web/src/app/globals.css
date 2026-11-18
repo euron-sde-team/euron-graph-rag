@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/*
+ * GraphRAG design tokens. Every colour in the app comes from these variables, so a theme or a
+ * brand change is one edit here. Light is the default; `.dark` on <html> switches the palette
+ * (set before first paint by the inline script in the root layout, so there is no flash).
+ * Contrast was checked: white on --primary, and --muted-foreground and --subtle on --card,
+ * pass WCAG AA in both themes. Entity type colours and community colours tell nodes apart in the graph
+ * explorer and the charts.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8f8fc;
+  --foreground: #14142b;
+  --card: #ffffff;
+  --card-foreground: #14142b;
+  --muted: #f0f0f8;
+  --muted-foreground: #5a5d73;
+  --subtle: #696e80;
+  --border: #e3e3f0;
+  --input: #d2d3e6;
+  --ring: #6366f1;
+  --primary: #4338ca;
+  --primary-hover: #3730a3;
+  --primary-foreground: #ffffff;
+  --accent: #eceefe;
+  --accent-foreground: #312e81;
+  --sidebar: #f3f3fa;
+  --sidebar-border: #e1e1ee;
+  --success: #12703a;
+  --success-soft: #e7f5ec;
+  --warning: #8f560a;
+  --warning-soft: #fdf4e1;
+  --danger: #be2329;
+  --danger-soft: #fdecec;
+  --info: #1d5fa8;
+  --info-soft: #e8f0fb;
+  --highlight: #fff1b8;
+  --type-person: #c2255c;
+  --type-organization: #4338ca;
+  --type-location: #0f766e;
+  --type-product: #b45309;
+  --type-technology: #0369a1;
+  --type-event: #7e22ce;
+  --type-concept: #4d7c0f;
+  --type-other: #5b6270;
+  --community-0: #4338ca;
+  --community-1: #0f766e;
+  --community-2: #c2255c;
+  --community-3: #b45309;
+  --community-4: #0369a1;
+  --community-5: #7e22ce;
+  --community-6: #4d7c0f;
+  --community-7: #be123c;
+  --community-8: #0e7490;
+  --community-9: #a16207;
+  --shadow-sm: 0 1px 2px rgb(16 24 24 / 0.06);
+  --shadow-md: 0 8px 24px -8px rgb(16 24 24 / 0.16), 0 2px 6px rgb(16 24 24 / 0.06);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0b0b16;
+  --foreground: #e8e8f4;
+  --card: #12121f;
+  --card-foreground: #e8e8f4;
+  --muted: #1a1a2c;
+  --muted-foreground: #a5a8bd;
+  --subtle: #8b8fa1;
+  --border: #25253a;
+  --input: #34344e;
+  --ring: #818cf8;
+  --primary: #a5b4fc;
+  --primary-hover: #c7d2fe;
+  --primary-foreground: #14123a;
+  --accent: #1b1b3a;
+  --accent-foreground: #c7d2fe;
+  --sidebar: #0e0e1b;
+  --sidebar-border: #1e1e32;
+  --success: #4ade80;
+  --success-soft: #10261a;
+  --warning: #fbbf24;
+  --warning-soft: #2a2210;
+  --danger: #f87171;
+  --danger-soft: #2c1517;
+  --info: #60a5fa;
+  --info-soft: #0f1f36;
+  --highlight: #4a3f0f;
+  --type-person: #f472b6;
+  --type-organization: #a5b4fc;
+  --type-location: #2dd4bf;
+  --type-product: #fbbf24;
+  --type-technology: #38bdf8;
+  --type-event: #c084fc;
+  --type-concept: #a3e635;
+  --type-other: #94a3b8;
+  --community-0: #a5b4fc;
+  --community-1: #2dd4bf;
+  --community-2: #f472b6;
+  --community-3: #fbbf24;
+  --community-4: #38bdf8;
+  --community-5: #c084fc;
+  --community-6: #a3e635;
+  --community-7: #fb7185;
+  --community-8: #22d3ee;
+  --community-9: #facc15;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 12px 32px -12px rgb(0 0 0 / 0.6), 0 2px 8px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-highlight: var(--highlight);
+  --color-type-person: var(--type-person);
+  --color-type-organization: var(--type-organization);
+  --color-type-location: var(--type-location);
+  --color-type-product: var(--type-product);
+  --color-type-technology: var(--type-technology);
+  --color-type-event: var(--type-event);
+  --color-type-concept: var(--type-concept);
+  --color-type-other: var(--type-other);
+  --color-community-0: var(--community-0);
+  --color-community-1: var(--community-1);
+  --color-community-2: var(--community-2);
+  --color-community-3: var(--community-3);
+  --color-community-4: var(--community-4);
+  --color-community-5: var(--community-5);
+  --color-community-6: var(--community-6);
+  --color-community-7: var(--community-7);
+  --color-community-8: var(--community-8);
+  --color-community-9: var(--community-9);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --animate-pulse-dot: pulse-dot 1.4s ease-in-out infinite;
+  --animate-fade-in: fade-in 160ms cubic-bezier(0.2, 0, 0, 1);
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Thin, quiet scrollbars that match the palette. */
+.scroll-quiet {
+  scrollbar-width: thin;
+  scrollbar-color: var(--input) transparent;
+}
+
+/* Numbers line up in tables and metric cards. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
