@@ -79,9 +79,6 @@ class Settings(BaseSettings):
     worker_concurrency: int = Field(default=2, ge=1, le=32)
     job_timeout_s: int = Field(default=900, ge=10)
     stale_job_minutes: int = Field(default=15, ge=1)
-    # A new graph build starts this long after the last document finished, so a batch of
-    # uploads is summarized once instead of once per file.
-    build_debounce_s: int = Field(default=5, ge=0, le=600)
 
     # Embeddings. "local" is deterministic signed feature hashing: no model, no download, no
     # key. Hosted providers must produce one of the widths with an HNSW index.
