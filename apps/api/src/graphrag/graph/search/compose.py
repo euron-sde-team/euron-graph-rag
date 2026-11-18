@@ -22,6 +22,7 @@ NO_ANSWER = "The knowledge graph has no passages that answer this question."
 MIN_SENTENCE_CHARS = 25
 MAX_SENTENCE_CHARS = 360
 MIN_RELEVANCE = 0.18
+RELATIVE_FLOOR = 0.55
 _CITATION = re.compile(r"\[(\d{1,3})\]")
 
 ANSWER_SYSTEM = (
@@ -38,11 +39,18 @@ MAP_SYSTEM = (
 
 
 def _sentences(item: ContextItem) -> list[str]:
-    return [
-        s
-        for s in split_sentences(item.text.replace("\n", " "))
-        if MIN_SENTENCE_CHARS <= len(s) <= MAX_SENTENCE_CHARS
-    ]
+    """Sentences of a source, line by line: a heading is not the start of the next sentence."""
+    found: list[str] = []
+    for line in item.text.split("\n"):
+        line = line.strip().lstrip("#").strip()
+        if len(line) < MIN_SENTENCE_CHARS:
+            continue
+        found.extend(
+            s
+            for s in split_sentences(line)
+            if MIN_SENTENCE_CHARS <= len(s) <= MAX_SENTENCE_CHARS and s[-1] in ".!?\"')"
+        )
+    return found
 
 
 def score_sentences(
@@ -70,13 +78,35 @@ def score_sentences(
     return sorted(scored, key=lambda row: (-row[0], row[1]))
 
 
-def extractive_answer(question: str, items: Sequence[ContextItem], *, sentences: int = 4) -> Answer:
+def digest_answer(items: Sequence[ContextItem], *, per_item: int = 2) -> Answer:
+    """For a question that names nothing in the sources ("what are the main themes?"): the
+    opening sentences of each source, in order, each cited."""
+    parts: list[str] = []
+    cited: list[int] = []
+    for item in items:
+        for sentence in _sentences(item)[:per_item]:
+            parts.append(f"{sentence.rstrip('.!? ')} [{item.n}].")
+            cited.append(item.n)
+    if not parts:
+        return Answer(NO_ANSWER, "local")
+    return Answer(" ".join(parts), "local", cited=sorted(set(cited)))
+
+
+def extractive_answer(
+    question: str,
+    items: Sequence[ContextItem],
+    *,
+    sentences: int = 4,
+    relative_floor: float = RELATIVE_FLOOR,
+) -> Answer:
     chosen: list[tuple[float, int, str, ContextItem]] = []
-    for row in score_sentences(question, items):
-        if row[0] < MIN_RELEVANCE and chosen:
+    ranked = score_sentences(question, items)
+    # Only sentences nearly as relevant as the best one: a long tail of weak matches would
+    # bury the answer under things that merely share a word with the question.
+    floor = max(MIN_RELEVANCE, relative_floor * (ranked[0][0] if ranked else 0.0))
+    for row in ranked:
+        if row[0] < floor:
             break
-        if row[0] < MIN_RELEVANCE:
-            continue
         words = set(content_terms(row[2]))
         if any(len(words & set(content_terms(c[2]))) / max(1, len(words)) > 0.8 for c in chosen):
             continue
